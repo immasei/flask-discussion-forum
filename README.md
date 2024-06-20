@@ -11,6 +11,11 @@ pip install -r requirements.txt
 ```bash
 make
 ```
+Pre-existing admin account: 
+- username: X
+- password: pwd
+  
+You can signup other accounts and use admin account to change permission.
 
 ### If the web stuck, you need to flush the socket pools
 
