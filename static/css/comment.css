@@ -1,0 +1,99 @@
+/* https://www.w3schools.com/howto/howto_css_chat.asp */
+
+* {
+    box-sizing: border-box;
+}
+
+/* https://stackoverflow.com/questions/59100312/single-button-to-show-hide-element-with-pure-css */
+/* https://stackoverflow.com/questions/14854900/how-to-move-text-up-using-css-when-nothing-is-working */
+.badge {
+    background-color: 	#4d7aa0;
+    color: white;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 10px;
+    position: relative;
+    bottom: 2px;
+    left: 2px;
+    margin-right: 20px
+  }
+
+  .ccontent {
+    padding-left: 28px; 
+    padding-top:5px;
+  }
+
+  .badge.Student{background:	#f2f299;}
+  .badge.Administrative{background:	#5e9387;}
+  .badge.Academics{background:	#c8e29d;}
+
+  .datetime {
+    margin-left: 20px; 
+    color: #BABABA ;
+  }
+
+  .commenter {
+    border: 2px solid #dedede;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 1px;
+  }
+
+  .comment {
+    border: 2px solid #dedede;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 1px;
+  }
+
+  .comment-container,
+  .show,
+  .hide:target {
+    display: none;
+  }
+  .hide:target + .show,
+  .hide:target ~ .comment-container {
+    display: block;
+  } 
+
+  .pid {
+    font-size: 25px; 
+    margin-left: 20px; 
+    color: #BABABA; 
+    text-decoration: none
+  }
+  /* https://www.w3schools.com/css/css3_buttons.asp */
+  .cbtn {
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 4px;
+    float: right;
+    width: 5%;
+    margin-right: 5px;
+  }
+  
+  .cbtn:hover {background: #eee; color: black}
+  
+  .success {background: #6c7485;}
+  .danger {background: 	#b85151;}
+  .default {background: #7b91ab;}
+
+  .dbtn {
+    border: none;
+    color:gray;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+    float: right; 
+    margin-right: 3px; 
+    position:relative; 
+    left: 10px; 
+    bottom: 25px;
+  }
+
+  .dbtn:hover {color:red}

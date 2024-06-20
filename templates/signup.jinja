@@ -1,0 +1,44 @@
+{% include 'base.jinja' %}
+
+
+{% block content %} 
+    <h1>Sign Up</h1>
+    <p>Username</p>
+    <input id="username"/>
+    <p>Password</p>
+    <input id="password" type="password"/>
+    <button onclick="signup()">Sign up</button>
+
+    <script>
+         function isValidURL(string) {
+            if (string.length == 0) {
+                return false;
+            }
+            if (string[0] == "/") {
+                return true;
+            }
+            return false;
+        }
+
+        async function signup() {
+            let loginURL = "{{ url_for('signup_user') }}";
+            let res = await axios.post(loginURL, {
+                username: $("#username").val(),
+                password: $("#password").val()
+            });
+
+            if (!isValidURL(res.data)) {
+                //alert(res.data);
+                return;
+            }
+            var PBKDF2_key = CryptoJS.PBKDF2($("#password").val(), "sAlTeD", {
+                        keySize: 512 / 32,
+                        iterations: 1000
+            });
+
+            // https://www.freecodecamp.org/news/web-storage-localstorage-vs-sessionstorage-in-javascript/
+            sessionStorage.setItem($("#username").val(), PBKDF2_key);
+            window.open(res.data, "_self")
+        }
+    </script>
+{% endblock %}

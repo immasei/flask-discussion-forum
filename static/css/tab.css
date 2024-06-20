@@ -1,0 +1,13 @@
+
+/* https://stackoverflow.com/questions/2637696/how-to-place-div-side-by-side  */
+.side-by-side {
+    display:flex;
+}
+.lside {
+    width: 35%;
+    overflow-y: auto; 
+	height:550px;
+}
+.rside {
+    flex-grow: 1;
+}

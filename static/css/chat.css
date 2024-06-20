@@ -1,0 +1,120 @@
+/* https://medium.com/@AppCode/15-css-chat-box-examples-and-code-ce47c84fba8e  */
+.convo {
+	text-align: left;
+  	display: block;
+	height:70px;
+	/* border-bottom:1px solid #ced1d3; */
+	justify-content: center;
+	padding: 10px;	
+}
+
+.convo:hover{
+	background:#ececec;
+	cursor:pointer;
+}
+
+.convo p strong{
+  font-weight:600;
+  font-size:15px;
+	color:#597a96;  
+}
+
+
+/* https://stackoverflow.com/questions/6089245/put-a-green-dot-or-red-dot-to-show-user-is-online-or-not */
+.status{
+	float:right;
+	margin-right: 10px;
+	margin-top: -12px;
+	color:#26c281;
+}
+.status.offline{color:#d17e7f;}
+
+ * {margin: 0; box-sizing: border-box;}
+
+ /* https://stackoverflow.com/questions/20565201/how-to-make-the-long-text-to-fit-inside-a-small-div */
+ /* https://stackoverflow.com/questions/9707397/making-a-div-vertically-scrollable-using-css */
+
+ /* https://stackoverflow.com/questions/71154905/css-for-chat-room-speech-bubble-position */
+
+.chat {
+	--rad: 20px;
+	--rad-sm: 3px;
+	font: 16px/1.5 sans-serif;
+	display: flex;
+	flex-direction: column-reverse;
+	padding: 10px;
+	/* max-width: 500px; */
+	word-wrap: break-word;
+	margin: auto;
+	overflow-y: auto; 
+	height:450px;
+  }
+  
+  .mess {
+	position: relative;
+	max-width: 75%;
+	padding: 7px 15px;
+	margin-bottom: 5px;
+  }
+  
+  .mess.sent {
+	border-radius: var(--rad) var(--rad-sm) var(--rad-sm) var(--rad);
+	background: #7d9cc4;
+	color: #fff;
+	margin-left: auto;
+  }
+  
+  
+  .mess.recv {
+	border-radius: var(--rad-sm) var(--rad) var(--rad) var(--rad-sm);
+	background: 	#eddc97;
+	color: #555;
+	margin-right: auto;
+  }
+
+  .mess.server {
+	border-radius: var(--rad-sm) var(--rad) var(--rad) var(--rad-sm);
+	background: #f0f1c7;
+	color: #555;
+	margin-right: auto;
+  }
+  
+  .mess.sent:first-child,
+  .mess.recv+.mess.sent {
+	border-top-right-radius: var(--rad);
+  }
+  
+  .mess.recv:first-child,
+  .mess.sent+.mess.recv {
+	border-top-left-radius: var(--rad);
+  }
+  
+  
+  /* time */
+  
+  .mess::before {
+	content: attr(data-time);
+	font-size: 0.8rem;
+	position: absolute;
+	bottom: 100%;
+	color: #888;
+	white-space: nowrap;
+	display: none;
+  }
+  
+  .mess.sent::before {
+	right: 15px;
+  }
+  
+  .mess.recv::before {
+	left: 15px;
+  }
+
+
+  .mess.sent+.mess.recv::before,
+  .mess.recv+.mess.sent::before {
+	display: block;
+  } 
+
+
+

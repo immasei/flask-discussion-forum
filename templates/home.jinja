@@ -1,0 +1,923 @@
+<!-- 
+    padding: https://www.w3schools.com/css/css_padding.asp
+    table: https://www.w3schools.com/css/tryit.asp?filename=trycss_table_color
+    dict get in js https://stackoverflow.com/questions/44184794/what-is-the-javascript-equivalent-of-pythons-get-method-for-dictionaries
+    loop thr table & update user status js https://stackoverflow.com/questions/3065342/how-do-i-iterate-through-table-rows-and-cells-in-javascript
+    toggle_table https://www.w3schools.com/css/css3_buttons.asp
+                 https://stackoverflow.com/questions/22190953/toggle-button-color-on-click
+                 https://stackoverflow.com/questions/57970443/need-help-switching-between-tables-in-javascript
+                 https://www.w3schools.com/js/js_arrays.asp
+    button  https://www.w3schools.com/w3css/w3css_tabulators.asp
+            https://www.w3schools.com/css/css3_buttons.asp
+    button onlick pass param https://stackoverflow.com/questions/70820913/can-i-pass-a-string-argument-to-an-onclick-javascript-function
+                             https://stackoverflow.com/questions/9643311/pass-a-string-parameter-in-an-onclick-function
+    div inline css https://blog.hubspot.com/website/change-background-color-html
+    rsa 2 client messaging: https://rahulbhilesha077.medium.com/encryption-decryption-using-rsa-in-java-script-cb7b3a6b3eee
+    hybrid crypto js        https://raw.githubusercontent.com/juhoen/hybrid-crypto-js/master/web/hybrid-crypto.min.js
+    crypto js https://stackoverflow.com/questions/75446363/how-to-use-cryptojs-in-the-javascript
+              https://medium.com/@araj60988/title-secure-data-encryption-and-decryption-with-cryptojs-in-javascript-2833d5d35068
+              https://stackoverflow.com/questions/76506170/typeerror-cannot-read-properties-of-undefined-reading-0-cryptojs
+              https://medium.com/@adarsh-d/aes-encryption-and-decryption-in-javascript-using-cryptojs-81b57205711d
+              https://cryptojs.gitbook.io/docs#hmac
+              https://coolaj86.com/articles/symmetric-cryptography-aes-with-webcrypto-and-node-js/
+              https://dev.to/halan/4-ways-of-symmetric-cryptography-and-javascript-how-to-aes-with-javascript-3o1b
+    aes malformed utf8 https://stackoverflow.com/questions/58111929/why-i-get-malformed-utf-8-data-error-on-crypto-js
+    js loop for in https://www.w3schools.com/js/js_loop_forin.asp
+    json parse https://stackoverflow.com/questions/15321431/how-to-pass-a-list-from-python-by-jinja2-to-javascript
+    axios get https://blog.logrocket.com/understanding-axios-get-requests/
+--> 
+{% include 'base.jinja' %}
+
+{% block content %} 
+   <style>
+ 
+    .tab-button {
+        background-color: #555555;
+        border: none;
+        color: white;
+        text-decoration: none;
+    }
+
+    .vtabcontent {
+        padding: 6px 12px;
+        border: 1px solid #ccc;
+    }
+
+    .nav-link {
+        background-color: #555555;
+        color: white !important;
+    }
+
+    .badge {
+        background-color: 	#4d7aa0;
+        color: white;
+        text-align: center;
+        border-radius: 5px;
+        font-size: 10px;
+        position: relative;
+        bottom: 2px;
+        left: 2px;
+        margin-right: 20px
+    }
+
+    .badge.Student{background:	#f2f299;}
+    .badge.Administrative{background:	#5e9387;}
+    .badge.Academics{background:	#c8e29d;}
+
+</style>
+
+<nav>
+    <li style="display:block; margin-left:5px;">Username:  {{ username }}<span class="badge {{ role }}">{{ role }}</span></li>
+</nav>
+<br>
+
+{# https://stackoverflow.com/questions/2637696/how-to-place-div-side-by-side #}
+<div class="side-by-side">
+    <div class="lside">
+
+        <ul class="nav nav-tabs nav-justified">
+            <li class="nav-item" style="text-align: center; color:white;">
+                <button class="nav-link inactive" id="friend-button" onclick="toggle_table('allfriend')"><span>Friends</span></button>
+            </li>
+            <li class="nav-item" style="text-align: center; color:white;">
+                <button class="nav-link inactive" id="group-button" onclick="toggle_table('allgroup')"><span>Group</span></button>
+            </li>
+            <li class="nav-item" style="text-align: center; color:white;">
+                <button class="nav-link inactive" id="sent-button" onclick="toggle_table('allsent')"><span>Sent</span></button>
+            </li>
+            <li class="nav-item" style="text-align: center; color:white;">
+                <button class="nav-link inactive" id="received-button" onclick="toggle_table('allrecv')"><span>Received</span></button>
+            </li>
+            <li class="nav-item" style="text-align: center; color:white;">
+                <button class="nav-link inactive" id="setting-button" onclick="toggle_table('setting')"><span><i class="bi bi-database-fill-gear"></i></span></button>
+            </li>
+        </ul>
+
+        <div id="setting" style="display: none;">
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Add friend</i></span>
+                <input id="add-friend" class="form-control" placeholder="Username">
+                <button class="btn btn-secondary" style="border: none;" onclick="send_friend_request()">
+                    <i class="bi bi-person-plus"></i>
+                </button>
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Unfriend</i></span>
+                <input id="un-friend" class="form-control" placeholder="Name">
+                <button class="btn btn-secondary" style="border: none;" onclick="un_friend()">
+                    <i class="bi bi-person-slash"></i>
+                </button>
+            </div>
+
+            <div class="input-group mb-3">
+                <span class="input-group-text">Create Group</i></span>
+                <input id="group-name" class="form-control" placeholder="Name">
+                <button class="btn btn-secondary" style="border: none;" onclick="create_groupchat()">
+                    <i class="bi bi-people"></i>
+                </button>
+            </div>        
+
+            <div id="select">
+                <select name="myfen" id="myfen" multiple>
+                {% for friendship in friendlist %}
+                    {% if friendship['status'] == "approved" %}
+                        {% if friendship['requester'] == username %}
+                            <option>{{ friendship['receiver'] }}</option>
+                        {% else %}
+                            <option>{{ friendship['requester'] }}</option>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+                </select>
+            </div>
+        </div>
+
+
+
+        {# https://stackoverflow.com/questions/1057416/how-to-make-div-click-able #}
+        <div id="allfriend">
+            {# https://medium.com/@AppCode/15-css-chat-box-examples-and-code-ce47c84fba8e #}
+            {% for friendship in friendlist %}
+                {% if friendship['status'] == "approved" %}                    
+                    {% if friendship['requester'] == username %}
+                        <div class="convo" onclick="join_room( '{{ friendship['receiver'] }}' )">
+                            <p>
+                                <strong>{{ friendship['receiver'] }}</strong><br>
+                                <span>{{ friendship['role'] }}</span>
+                                <span class="status online">●</span>
+                            </p>
+                        </div>
+                    {% else %}
+                        <div class="convo" onclick="join_room( '{{ friendship['requester'] }}' )">
+                            <p>
+                                <strong>{{ friendship['requester'] }}</strong><br>
+                                <span>{{ friendship['role'] }}</span>
+                                <span class="status online">●</span>
+                            </p>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        <table id="allsent" class="table table-bordered table-striped" style="display: none">
+            <thead>
+                <tr>
+                    <th>receiver</th>
+                    <th>status</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                {% for friendship in friendlist %}
+                    {% if friendship['status'] == "pending" %}
+                        {% if friendship['requester'] == username %}
+                            <tr>
+                                <td>{{ friendship['receiver'] }}</td>
+                                <td>pending</td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <table id="allrecv" class="table table-bordered table-striped" style="display: none">
+            <thead>
+                <tr>
+                    <th>requester</th>
+                    <th>approve</th>
+                    <th>reject</th> 
+                </tr>
+            </thead>
+            
+            <tbody>
+                {% for friendship in friendlist %}
+                    {% if friendship['status'] == "pending" %}
+                        {% if friendship['receiver'] == username %}
+                            <tr>
+                                <td>{{ friendship['requester'] }}</td>
+                                <td><button class="btn btn-link btn-sm" onclick="approver( '{{ friendship['requester'] }}' )"><i class="bi bi-person-check-fill"></i></button></td>
+                                <td><button class="btn btn-link btn-sm" onclick="remove_friend( '{{ friendship['requester'] }}' )"><i class="bi bi-trash"></i></button></td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div id="allgroup" style="display: none">
+            {# https://medium.com/@AppCode/15-css-chat-box-examples-and-code-ce47c84fba8e #}
+            {% for group in grouplist %}
+                <div class="convo" onclick="_join_room( '{{ group['name'] }}' )">
+                    <p>
+                        <strong>{{ group['name'] }}</strong><br>
+                        <span>Group</span>
+                    </p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="rside">
+        {# https://stackoverflow.com/questions/71154905/css-for-chat-room-speech-bubble-position #}
+        <div id="E2EChatTab" class="vtabcontent" style="display: none">
+            <h3 id="e2e-header" style="padding-top: 10px;">Chat</h3>
+            <p style="padding-bottom: 10px;">E2E Chat</p>
+            <div id="E2EChatBox" class="chat"></div>
+        
+            {# https://www.w3schools.com/bootstrap/bootstrap_ver.asp #}
+            <div class="input-group mb-3 input-group-sm" style="display: flex; align-items: center; padding: 10px;">
+                <span class="input-group-text">@{{ username }}</span>
+                <input id="E2EBox" class="form-control" placeholder="Message ..">
+                <button class="input-group-text" onclick="send()">
+                    <i class="bi bi-arrow-return-left"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="GroupChatTab" class="vtabcontent" style="display: none">
+            <h3 id="group-header" style="padding-top: 10px;">Chat</h3>
+            <p id="list-group-mem" style="padding-bottom: 10px;">Group Chat</p>
+            <div id="GroupChatBox" class="chat"></div>
+        
+            {# https://www.w3schools.com/bootstrap/bootstrap_ver.asp #}
+            <div class="input-group mb-3 input-group-sm" style="display: flex; align-items: center;">
+                <span class="input-group-text">@{{ username }}</span>
+                <input id="GroupBox" class="form-control" placeholder="Message ..">
+                <button class="input-group-text" onclick="_send()">
+                    <i class="bi bi-arrow-return-left"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // https://github.com/habibmhamadi/multi-select-tag
+    var select = new MultiSelectTag('myfen', {
+        rounded: true,    // default true
+        shadow: true,      // default false
+        placeholder: 'Search',  // default Search...
+        tagColor: {
+            textColor: '#327b2c',
+            borderColor: '#92e681',
+            bgColor: '#eaffe6',
+        },
+        onChange: function(values) {
+            console.log(values)
+        }
+    });
+
+    // generate rsa key pair
+    var crypt = new Crypt();
+    var rsa = new RSA();
+    var public_key;
+    var private_key;
+    gen_RSA();
+
+    // chat storage
+    let username = "{{ username }}";
+    let PBKDF2_key = sessionStorage.getItem(username);
+    // sessionStorage.removeItem(username);
+
+    // get current log key to every room chat
+    var log_key;
+    let friendlist = {{friendlist | tojson}};
+    store_log_key();
+
+    // communication
+    let room_id = 0;
+    Cookies.set('username', username);
+    var pub_key;
+    var secret_key;
+    const socket = io();
+
+    // refresh /home, PBKDF2_key = null
+    var re_login_url = "{{ url_for('refresh') }}";
+    console.log(PBKDF2_key);
+    if (PBKDF2_key == null) { 
+        re_authenticate(re_login_url); 
+    }
+
+    $(document).ready(() => {
+        $('#E2EBox').emojioneArea();
+        $('#GroupBox').emojioneArea();
+
+        if (Cookies.get("room_id") == undefined) { return; }
+        Cookies.remove("room_id");
+    })
+
+    // generate a 32 bytes secret key
+    // 32 bytes = 256 bits (AES-256)
+    function gen_secret_key() {
+        var keyLength = 32; 
+        var buffer = new Uint8Array(keyLength);
+        crypto.getRandomValues(buffer);
+        return Array.from(buffer, (byte) =>
+            byte.toString(16).padStart(2, '0')
+        ).join('');
+    };
+
+    // AES encryption
+    function aes_encrypt(message, key) {      
+        var encrypted = CryptoJS.AES.encrypt(JSON.stringify({message}), key);
+        return encrypted.toString();
+    };
+
+    // AES decryption
+    function aes_decrypt(message, key) {
+        var decrypted = CryptoJS.AES.decrypt(message, key);
+        return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8)).message;
+    };
+
+    // generate RSA key pair
+    function gen_RSA() {
+        var rsa = new RSA();
+        rsa.generateKeyPair(function(keyPair) {
+            public_key = keyPair.publicKey;
+            private_key = keyPair.privateKey;
+        });
+        // tell server self.public_key
+        setTimeout(() => {
+            // rsa failure -> relogin
+            if (public_key == undefined) {
+                var re_login_url = "{{ url_for('rsa_failure') }}";
+                re_authenticate(re_login_url);
+            // rsa okay, send to server for temporary storage for current login session
+            } else {
+                socket.emit('rsa', public_key, (res) => {
+                    if (typeof res === 'string' && isValidURL(res)) {
+                        var re_login_url = "{{ url_for('reauthenticate') }}";
+                        re_authenticate(re_login_url);
+                    }
+                });
+            }            
+        }, 1000);
+    };
+
+    // RSA encryption
+    function rsa_encrypt(pkey, skey) {
+        var entropy = 'Testing of RSA algorithm in javascript.';
+        var crypt = new Crypt({
+            rsaStandard: 'RSA-OAEP',
+            entropy: entropy
+        });
+        var rsa = new RSA({
+            entropy: entropy
+        });
+        return crypt.encrypt(pkey, skey);
+    };
+
+    // RSA decryption
+    function rsa_decrypt(key) {
+        var entropy = 'Testing of RSA algorithm in javascript.';
+        var crypt = new Crypt({
+            rsaStandard: 'RSA-OAEP',
+            entropy: entropy
+        });
+        var rsa = new RSA({
+            entropy: entropy
+        });
+        return crypt.decrypt(private_key, key).message; 
+    };
+
+    // [1] update list of online users
+    socket.on('notification', function(message) {
+        change_online_status(message.online_users);
+    });
+    // [2.1][sent request] requester
+    socket.on('sent', function(message) {
+        add_sent(message.username);
+        toggle_table("allsent");
+    });
+
+    socket.on('group-created', function(message) {
+        add_group(message.groupname);
+    });
+
+    // [2.2][sent request] receiver
+    socket.on('received', function(message) {
+        add_recv(message.username);
+        console.log(12);
+    });
+    // [2.3][approved request] requester
+    socket.on('approved', function(message) {
+        // {'username': user, 'status': 'online', 'role': db.get_user(user).role}
+        add_friend(message.username, message.role, message.status);
+        del_table_row(message.username, 'allsent');
+        add_option();
+    });                                               // add to table::FRIENDS
+
+    function add_friend(user, role) {
+        var new_friend =  '<div class="convo" onclick="join_room( \''+user+'\' )">'+
+                                '<p>' +
+                                    '<strong>'+user+'</strong><br>'+
+                                    '<span>'+role+'</span>'+
+                                    '<span class="status '+'online">●</span>'+
+                                '</p>'+
+                            '</div>';
+
+        $('#allfriend').prepend(new_friend);
+    }
+
+    function add_group(group) {
+        var new_group =  '<div class="convo" onclick="_join_room( \''+group+'\' )">'+
+                            '<p>'+
+                                '<strong>'+group+'</strong><br>'+
+                                '<span>Group</span>'+
+                            '</p>'+
+                        '</div>'
+
+        $('#allgroup').prepend(new_group);
+    }
+
+    function add_sent(user) {
+        var new_sent_req =  '<tr>'+
+                                '<td>'+user+'</td>'+
+                                '<td>pending</td>'+
+                            '</tr>';
+
+        $('#allsent '+'> tbody:first').append(new_sent_req);
+    }
+
+    function add_recv(user) {
+        var table = 'allrecv';
+        var new_recv_req =  '<tr>'+
+                                '<td>'+user+'</td>'+
+                                '<td><button class="btn btn-link btn-sm" onclick="approver( \''+user+'\' )"><i class="bi bi-person-check-fill"></i></button></td>'+
+                                '<td><button class="btn btn-link btn-sm" onclick="remove_friend( \''+user+'\' )"><i class="bi bi-trash"></i></button></td>'+
+                            '</tr>';
+
+        $('#allrecv '+'> tbody:first').append(new_recv_req);
+    }
+
+    function del_table_row(user, table) {
+        $('#'+table+' tr').each(function() {
+            var row = $(this).find("td:first");
+                if (row.text() == user) {
+                    $(this).find("td").remove();
+                }
+        });
+    }
+
+    function del_div_row(user, table) {
+        var allfriend = document.getElementById(table);
+        $('#allfriend .convo').each(function() {
+            var ident = $(this).find('p strong').text();
+
+            if (ident == user) {
+                $(this).remove();
+            }
+        });
+    }
+
+    // [2.4][rejected request] requester
+    socket.on('removed', function(message) {         // remove from table::RECEIVED
+        if (message.table != 'allfriend') {
+            console.log(12213);
+            del_table_row(message.username, 'allsent');
+        } else {
+            del_div_row(message.username, message.table);
+        }
+
+    });
+    // [3] in-room incoming message
+    socket.on("incoming", (message) => {
+        add_msg(message.username, message.message, message.hmac, message.color);
+    });    
+
+    // [4] receive friend's public key, exchange secret key
+    socket.on("rsa", (message) => {
+        pub_key = message;
+        secret_key = gen_secret_key();
+        socket.emit('aes', rsa_encrypt(pub_key, secret_key), room_id, (res) => {
+            var re_login_url = "{{ url_for('reauthenticate') }}";
+            if (typeof res === 'string' && isValidURL(res)) {
+                re_authenticate(re_login_url);
+            }
+        });
+    });
+    // [5] receive secret key
+    socket.on("aes", (message) => {
+        secret_key = rsa_decrypt(message.sec_key);
+    });
+    // [6] the-one-who-approve-friend-request::receiver receive the requester public key
+    socket.on('approver', function(message) {
+        socket.emit('send_pkey', username, message.username, 
+                          rsa_encrypt(message.pub_key, 
+                                      aes_decrypt(sessionStorage.getItem(message.username), PBKDF2_key)
+                          ), (res) => {
+                                if (typeof res === 'string' && isValidURL(res)) {
+                                    var re_login_url = "{{ url_for('reauthenticate') }}";
+                                    re_authenticate(re_login_url);
+                                }
+        });
+        
+    });
+    // [7] requester receive log key
+    socket.on('receive_pkey', function(message) {
+        var to_save = aes_encrypt(rsa_decrypt(message.pkey), PBKDF2_key);
+        socket.emit('save_pkey', username, message.username, to_save, (res) => {
+                if (typeof res === 'string' && isValidURL(res)) {
+                    var re_login_url = "{{ url_for('reauthenticate') }}";
+                    re_authenticate(re_login_url);
+                }
+        });
+        sessionStorage.setItem(message.username, to_save);
+    });
+    // [8] requester check if it has no log key for any room chat
+    socket.on('no_pkey',  function(message) {
+        request_pkey();
+    });
+
+    socket.on('repo-create', function(message) {
+        flash(message.message, message.category);
+    });
+
+
+    // loop thr table::FRIENDS, if no log keys, ask for log keys
+    function request_pkey() {
+        var allfriend = document.getElementById("allfriend");
+        $('#allfriend .convo > p').each(function() {
+            var friend = $(this).find('strong').text();
+
+            if (sessionStorage.getItem(friend) == 'null') {
+                socket.emit('ask_pkey', username, friend, (res) => {
+                    if (typeof res === 'string' && isValidURL(res)) {
+                        var re_login_url = "{{ url_for('reauthenticate') }}";
+                        re_authenticate(re_login_url);
+                    }
+                });
+            }
+        });
+    }
+
+    // send message
+    function send() {
+        let message = $("#E2EBox").val();
+        console.log(message, log_key);
+        var to_save = aes_encrypt(message, log_key);
+        // 2 users in same room
+        if (secret_key) {
+            var to_send = aes_encrypt(message, secret_key);
+            var hmac = CryptoJS.HmacSHA256(to_send, secret_key).toString(CryptoJS.enc.Base64);
+        // 1-side chat
+        } else {
+            var to_send = null;
+            add_msg(username, message, null, 'black2');
+        }
+        // save message and tranfer message (if both in same room)
+        socket.emit("send", username, to_send, hmac, room_id, to_save, (res) => {
+                if (typeof res === 'string' && isValidURL(res)) {
+                    var re_login_url = "{{ url_for('reauthenticate') }}";
+                    re_authenticate(re_login_url);
+                }
+        });
+    } 
+
+    // join room
+    function join_room(friend) {
+        leave();                            // leave old room be4 join new room
+        secret_key = null;                  // for communication
+        log_key = null;                     // for chat history
+        friendlist = null;                  // for log key update
+
+        socket.emit("join", username, friend, (res) => {
+            if (typeof res === 'string' && isValidURL(res)) {
+                var re_login_url = "{{ url_for('reauthenticate') }}";
+                re_authenticate(re_login_url);
+            }
+
+            pub_key = res.pub_key;          // get friend's public key
+            room_id = res.room_id;          // get current room id
+            friendlist = res.friendlist;    // get friendlist 
+            store_log_key();                // update all log keys
+            Cookies.set("room_id", room_id);
+
+            // user dont have a log key yet, in order to get log key, both requester & receiver must both online once
+            if (sessionStorage.getItem(friend) == 'null') {
+                leave();
+                flash("No log key yet. Can't enter E2E Room. Wait until key exchange.", "danger");
+                return;
+            }    
+            $("#e2e-header").text(friend);
+            $("#E2EChatTab").show(); 
+            show_chat_log(res.chat_log, friend);
+        });
+    }
+
+    // leave room
+    function leave() {
+        Cookies.remove("room_id");
+        socket.emit("leave", username, room_id, (res) => {
+            if (typeof res === 'string' && isValidURL(res)) {
+                var re_login_url = "{{ url_for('reauthenticate') }}";
+                re_authenticate(re_login_url);
+            }
+            room_id = res;
+        });
+        document.getElementById('E2EChatBox').innerHTML = "";
+        document.getElementById('GroupChatBox').innerHTML = "";
+        $("#E2EChatTab").hide(); 
+        $("#GroupChatTab").hide(); 
+    }
+
+
+    function add_msg(sender, message, hmac, color) {
+        let box1 = $("#E2EChatBox");
+        let box2 = $("#GroupChatBox");
+        if (color == 'black') {                                         // 2-side chat
+            var curr_hmac = CryptoJS.HmacSHA256(message, 
+                                                secret_key).toString(CryptoJS.enc.Base64);
+            if (curr_hmac != hmac) {                                    // HMAC
+                message = 'message from ' + uname + 'is tampered.';
+                sender = null;
+            } else {
+                message = aes_decrypt(message, secret_key);
+            }
+        } else if (color == 'black2') { color = 'black';                // 1-side chat
+        } else { sender = null; }    
+
+        let timestamp = '';
+        let child = '<div data-time="'+timestamp+'" class="mess recv"><p style="color: red; display:inline;">'+sender+'. </p>'+message+'</div>';
+        if (sender == null) {
+            child = '<div data-time="'+timestamp+'" class="mess server"><p style="color: grey; display:inline;">@server. </p>'+message+'</div>';
+        }
+        if (sender == username) {
+            child = '<div data-time="'+timestamp+'" class="mess sent">'+message+'</div>'
+        } 
+        box1.prepend(child);
+        box2.prepend(child);
+        $("#E2EBox").val("");
+        $("#GroupBox").val("");
+
+        // https://stackoverflow.com/questions/59462663/clear-the-form-textarea-after-submit-emoji-picker-with-jquery
+        $('#E2EBox').data("emojioneArea").setText('');
+        $('#GroupBox').data("emojioneArea").setText('');
+
+    }
+
+    // change friend online status in table::FRIENDS
+    function change_online_status(users) {
+        // https://stackoverflow.com/questions/55206075/change-css-class-content-with-jquery
+        var allfriend = document.getElementById("allfriend");
+        $('#allfriend .convo > p').each(function() {
+            var ident = $(this).find('strong').text();
+            
+            // https://stackoverflow.com/questions/11619545/jquery-loop-through-child-divs
+            // https://stackoverflow.com/questions/8249785/jquery-replace-one-class-with-another
+            let stat = users[ident] ?? "offline";
+            if (stat != "offline") stat = "online";
+            console.log(stat);
+            $(this).find('span.status').removeClass().addClass('status '+stat);
+        });
+
+    }
+
+    // switch tab
+    // ie when approve friend request, it will switch to table FRIENDS 
+    //    so user know that new friend has been added
+    function toggle_table(table_name) {
+        const table_ids = ['allfriend', 'allrecv', 'allsent', 'allgroup', 'setting'];
+        const buttons = ['friend-button', 'received-button', 'sent-button', 'group-button', 'setting-button'];
+        
+        for (var i = 0; i < table_ids.length; i++) {
+            var table = document.getElementById(table_ids[i]);
+            var button = document.getElementById(buttons[i]);
+            if (table_ids[i] == table_name) {
+                table.style.display = "block";
+                button.style.backgroundColor = "#4b7dbf";
+            } else {
+                table.style.display = "none";
+                button.style.backgroundColor = "#555555";
+            }
+        }
+    }
+
+    // button::SEND
+    function send_friend_request() {
+        let friend = $("#add-friend").val();
+        socket.emit('request', username, friend, (res) => {
+            if (typeof res === 'string' && isValidURL(res)) {
+                var re_login_url = "{{ url_for('reauthenticate') }}";
+                re_authenticate(re_login_url);
+            }
+        });
+        $("#add-friend").val("");
+    }
+
+    function un_friend() {
+        let friend = $("#un-friend").val().trim();
+        $("#un-friend").val("");
+        remove_friend(friend, 'allfriend');
+    }
+
+
+    // user::receiver approves friend request from friend::requester
+    function approver(friend) {
+        // generate log key
+        sessionStorage.setItem(friend, aes_encrypt(gen_secret_key(), PBKDF2_key));
+        // tell server [i approve this friend request]
+        socket.emit('approve', username, friend, 
+                               sessionStorage.getItem(friend), (res) => {
+            if (isValidURL(res)) {
+                var re_login_url = "{{ url_for('reauthenticate') }}";
+                re_authenticate(re_login_url);
+            }
+            // realtime update: show new friend in table::FRIENDS
+            // res = friend::requester online status
+            add_friend(friend, res.role, res.status);
+            add_option();
+        });
+        // realtime update: delete row from table::RECEIVED
+        del_table_row(friend, 'allrecv');
+        toggle_table("allfriend");
+    }
+    
+    // user::receiver rejects friend request from friend::requester
+    function remove_friend(friend, table_name='allsent') {
+        socket.emit('remove', username, friend, table_name, (res) => {
+            if (typeof res === 'string' && isValidURL(res)) {
+                var re_login_url = "{{ url_for('reauthenticate') }}";
+                re_authenticate(re_login_url);
+            }
+        });
+        // realtime update: delete row from table::RECEIVED
+        if (table_name == 'allsent') {
+            del_table_row(friend, 'allrecv');
+        } else {
+            del_div_row(friend, table_name);
+        }
+    }
+
+    // re-assign log key in session storage
+    function store_log_key() {
+        for (let i = 0; i < friendlist.length; i++) {
+            var friendship = friendlist[i];
+
+            if (username == friendship.requester) {
+                sessionStorage.setItem(friendship.receiver, friendship.requester_pkey);
+            } else  {
+                sessionStorage.setItem(friendship.requester, friendship.receiver_pkey);
+            }
+        }
+    }
+
+    function re_authenticate(url) {
+        axios.get(url) 
+            .then(response => {
+                window.open(response.data, "_self");
+        })
+    }
+
+    function isValidURL(string) {
+            if (string.length == 0) {
+                return false;
+            }
+            if (string[0] == "/") {
+                return true;
+            }
+            return false;
+    }
+
+    // https://stackoverflow.com/questions/18113495/how-can-i-get-a-list-of-all-values-in-select-box
+    // list of selected friend
+    function retrieve_selected(select) {
+        let selected = document.getElementById(select);
+        let chosen = [...selected.options].map(o => o.text);
+        return chosen;
+    }
+
+    function flash(message, category) {
+        // https://www.w3schools.com/bootstrap/bootstrap_alerts.asp
+        // https://stackoverflow.com/questions/17650776/add-remove-html-inside-div-using-javascript
+        var flash = document.getElementById('flash');
+        $('#flash').empty();
+        flash.innerHTML = '<div class="alert alert-' + category +  ' alert-dismissible">' +
+                            '<strong>' + message + '</strong>' +
+                            '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+    }
+
+    function create_groupchat() {
+        let selected = retrieve_selected('myfen');
+        let groupname = $("#group-name").val().trim();
+
+        if (groupname == '') {
+            flash("Group Name can't be blank.", 'warning');
+            return;
+        }
+
+        socket.emit('create-group', username, groupname, selected, (res) => {
+            if (typeof res === 'string' && isValidURL(res)) {
+                var re_login_url = "{{ url_for('reauthenticate') }}";
+               re_authenticate(re_login_url);
+           }
+            flash(res.message, res.category);
+            if (res.category == 'success') {
+                toggle_table('allgroup');
+            }
+            
+        });
+        $("#group-name").val("");
+    }
+
+    function add_option() {
+        var sel1 = document.getElementById('select');
+        $('#select').empty();
+        sel1.innerHTML = '<select name="myfen" id="myfen" multiple><select>'
+
+        var sel2 = document.getElementById('myfen');
+
+        var allfriend = document.getElementById("allfriend");
+        $('#allfriend .convo > p').each(function() {
+            var ident = $(this).find('strong').text();
+
+            sel2.add(new Option(ident));
+        });
+
+        new MultiSelectTag('myfen', {
+            rounded: true,    // default true
+            shadow: true,      // default false
+            placeholder: 'Search',  // default Search...
+            tagColor: {
+                textColor: '#327b2c',
+                borderColor: '#92e681',
+                bgColor: '#eaffe6',
+            },
+            onChange: function(values) {
+                console.log(values)
+            }
+        });
+    }
+
+    function _join_room(group) {
+        leave();                            // leave old room be4 join new room
+        socket.emit("_join", username, group, (res) => {
+            if (typeof res === 'string' && isValidURL(res)) {
+                var re_login_url = "{{ url_for('reauthenticate') }}";
+                re_authenticate(re_login_url);
+            }
+            room_id = res.room_id;          // get current room id
+            Cookies.set("room_id", room_id);
+
+            console.log("Group Chat: "+res.mem.join(", "));
+
+            $("#group-header").text(group);
+            $("#list-group-mem").text("Group Chat: "+res.mem.join(", "));
+            $("#GroupChatTab").show(); 
+            show_chat_log(res.chat_log); 
+        });
+    }
+
+    function _send() {
+        let message = $("#GroupBox").val();
+
+        // save message and tranfer message (if both in same room)
+        socket.emit("_send", username, room_id, message, (res) => {
+            if (typeof res === 'string' && isValidURL(res)) {
+                var re_login_url = "{{ url_for('reauthenticate') }}";
+                re_authenticate(re_login_url);
+            }
+        });
+    } 
+
+    function show_chat_log(chat_log, friend=null) {
+        let box1 = $("#E2EChatBox");
+        let box2 = $("#GroupChatBox");
+        if (friend != null) {
+            log_key = aes_decrypt(sessionStorage.getItem(friend), PBKDF2_key);
+        }
+
+        for (let time in chat_log) {
+            // let timestamp = time;
+            let timestamp = "";
+            let sender = chat_log[time][0];
+            let message = chat_log[time][1];
+
+            if (sender != null && friend != null) {
+                message =  aes_decrypt(message, log_key);
+            }
+
+            let child = '';
+
+            if (sender == null) {
+                child = '<p style="color: grey; display:inline; text-align: center;">@server. '+message+'</p>';
+            } else {
+                if (sender == username) {
+                    child = '<div data-time="'+timestamp+'" class="mess sent">'+message+'</div>';
+                } else {
+                    child = '<div data-time="'+timestamp+'" class="mess recv"><p style="color: red; display:inline;">'+sender+'. </p>'+message+'</div>';
+                    
+                }
+                box1.prepend(child);
+                box2.prepend(child);
+            }  
+            
+        }
+    }
+    
+</script>
+{% endblock %}

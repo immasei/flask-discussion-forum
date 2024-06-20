@@ -1,0 +1,736 @@
+{# https://www.w3schools.com/howto/default.asp #}
+
+{% include 'base.jinja' %}
+
+{% block content %} 
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/comment.css') }}">
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/blog.css') }}">
+
+<div class="htab">
+    <button class="htablinks" onclick="open_htab(event, 'setting')"><i class="bi bi-gear-wide-connected"></i>    Setting</i></i></button>
+    
+    {% for repo in repolist %}
+        <button class="htablinks" onclick="open_htab(event, '{{ repo['name'] }}')">{{ repo['name'] }}</button>
+    {% endfor %}
+</div>
+
+
+<div id="setting" class="htabcontent">
+    <div class="vtab" style="display: none;">
+        <button style="width: 100%" class="vtablinks" onclick="open_vtab(event, 'settingArticle')">Repo Administration and Registration <i class="bi bi-card-text"></i></button>
+    </div>
+
+    <div id="settingArticle" class="vtabcontent">
+        <h3 style="padding-top: 10px;">Setting</h3> 
+        <p>Select mutiple users to add in a new or existing repo. Use the search bar to filter.</p>
+        <p>You must be an Admin to promote.</p>
+        <p>You must be at least an Administrative to create/ add people to repo.</p>
+        <p>You cannot demote/ promote someone of higher badge.</p>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Create </i></span>
+            <span class="input-group-text">Add to</i></span>
+            <input id="settingCreadd" class="form-control" placeholder="Reponame">
+            <button class="btn btn-primary" style="border: none;" onclick="creaddd_mem_repo()">
+                <i class="bi bi-database-add"></i>
+            </button>
+        </div>
+
+        <br>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Search</i></span>
+            <input id="settingSearch" class="form-control" placeholder="Username">
+        </div>
+        <table id="settingTable" class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Role</th>
+                    <th>Promote</th>
+                    <th>Password</th>
+                    <th>Select</th>
+                    <th>Save</th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                {% for u in userlist %}
+                <tr>
+                    <td>{{ u['username'] }}</td>
+                    <td><span class="badge {{ u['role'] }}">{{ u['role'] }}</span></td>
+                    <td>
+                        <button class="btn btn-link btn-sm" style="border: none; height: 25px; width: 25px;" onclick="up( '{{ u['username'] }}' )">
+                            <i class="bi bi-arrow-up-square-fill" style="color:#83adb5;"></i>
+                        </button>
+                        <button class="btn btn-link btn-sm" style="border: none; height: 25px; width: 25px;" onclick="down( '{{ u['username'] }}' )">
+                            <i class="bi bi-arrow-down-square-fill" style="color:#f9b764;"></i>
+                        </button>
+                    </td>
+                    <td>
+                        <input type="text" class="form-control input-sm" style="height: 25px;">
+                    </td>
+                    <td>
+                        <label class="checkbox-container">
+                            <input type="checkbox" style="border-radius: 30px;">
+                            <span class="checkmark"></span>
+                        </label>
+                    </td>
+                    <td>
+                        <button class="btn btn-link btn-sm" style="border: none; height: 25px; width: 25px;" onclick="">
+                            <i class="bi bi-person-down"></i>
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %} 
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% for repo in repolist %}
+    <div id="{{ repo['name'] }}" class="htabcontent">
+        <div class="vtab" style="display: none;">
+            <button class="vtablinks" onclick="open_vtab(event, '{{ repo['name'] }}Article')">Article    <i class="bi bi-card-text"></i></button>
+            <button class="vtablinks" onclick="open_vtab(event, '{{ repo['name'] }}Chat')">Chat    <i class="bi bi-chat-dots"></i></button>
+            <button class="vtablinks" onclick="open_vtab(event, '{{ repo['name'] }}Setting')">Setting    <i class="bi bi-gear"></i></button>
+        </div>
+
+        <div id="{{ repo['name'] }}Article" class="vtabcontent">
+            <div class="header">
+                <h2>{{ repo['name'] }}</h2>
+            </div>
+ 
+            <div class="card">
+                <b style="padding-bottom: 10px;">Title:</b>
+                <textarea id="{{ repo['name'] }}Title" placeholder="Title" class="form-control" style="padding-bottom: 0px;"></textarea>
+                <br>
+                <p style="padding-bottom: 5px;">Your Thread:</p>
+                <textarea id="{{ repo['name'] }}Thread" placeholder="Thread" class="form-control"style="padding-bottom: 80px; position: relative; bottom: 12px;"></textarea>
+
+                <div>
+                    <button onclick="create_post( '{{ repo['name'] }}' )">Post</button>
+                    <button onclick="">Clear</button>
+                </div>
+            </div>
+
+            <div id="POST{{ repo['name'] }}">
+            {# https://stackoverflow.com/questions/7522848/contenteditable-false-inside-contenteditable-true-block-is-still-editable-in-ie8 #}
+            {% for post in postlist %}
+                {% if post['repo'] == repo['name'] %}
+                    <div id="SUBP{{ post['id'] }}" class="card">
+                        <h2 id="TITLE{{ post['id'] }}" contenteditable>{{ post['title'] }} 
+                            <a id="BADGE{{ post['id'] }}" contenteditable="false" href="#{{ post['id'] }}" class="pid">#{{ post['id'] }}</a>
+                        </h2>
+                        
+                        <p>{{ post['author'] }}  
+                            <span class="badge {{ post['role'] }}">{{ post['role'] }}</span>
+                            <span class="datetime">{{ post['datetime'] }}</span>
+                        </p>
+
+                        {# https://stackoverflow.com/questions/66529344/how-do-i-make-an-editable-paragraph-in-html #}
+                        {# <div class="fakeimg" style="height:200px;">Image</div> #}
+                        <p id="CONTENT{{ post['id'] }}"contenteditable>{{ post['content'] }}</p>
+                        
+                        <textarea id="{{ repo['name'] }}{{ post['id'] }}" placeholder="Comment" class="form-control"></textarea>
+
+                        <div style="margin-top: 5px;">
+                            <button onclick="save_comment( '{{ repo['name'] }}', '{{ post['id'] }}' )" class="cbtn default"><i class="bi bi-arrow-90deg-right"></i></button>
+                            <button onclick="modify_post( '{{ repo['name'] }}', '{{ post['id'] }}' )" class="cbtn success"><i class="bi bi-pencil-square"></i></button>
+                            <button onclick="delete_post( '{{ repo['name'] }}', '{{ post['id'] }}' )" class="cbtn danger"><i class="bi bi-trash3"></i></button>
+                        </div>
+
+                        <a id="hide" href="#hide" class="hide">+ Show comments</a>
+                        <a id="show" href="#show" class="show">- Show comments</a>
+                        
+                        <div id="COMMENT{{ post['id'] }}" class="comment-container">
+                            {% for cm in post['comment'] %}
+                            <div id="SUBC{{ post['id'] }}{{ post['comment'][cm][0] }}{{ post['comment'][cm][1] }}" class="comment">
+                                <b style="margin-top: 4px;">{{ post['comment'][cm][1] }}</b>
+                                <span class="badge {{ post['comment'][cm][3] }}">{{ post['comment'][cm][3] }}</span>
+                                <span class="datetime">{{ post['comment'][cm][0] }}</span>
+                                <p class="ccontent"> {{ post['comment'][cm][2] }}</p>
+                                <button onclick="delete_comment( '{{ post['id'] }}',  '{{ post['comment'][cm][1] }}', '{{ post['comment'][cm][0] }}' )" class="dbtn">Delete</button>
+                            </div>
+                            {% endfor %} 
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %} 
+            </div>  
+        </div>
+
+        <div id="{{ repo['name'] }}Chat" class="vtabcontent">
+            <h3 style="padding-top: 10px;">{{ repo['name'] }}</h3>
+            <p style="padding-bottom: 10px;">Chat tab</p>
+            <div id="CHAT{{ repo['name'] }}" class="chat"></div>
+        
+            {# https://www.w3schools.com/bootstrap/bootstrap_ver.asp #}
+            <div class="input-group mb-3 input-group-lg" style="display: flex; align-items: center; padding: 10px;">
+                <span class="input-group-text">@{{ username }}</span>
+                <input id="{{ repo['name'] }}Box" class="form-control" placeholder="Message ..">
+                <button class="input-group-text" onclick="send( '{{ repo['name'] }}' )">
+                    <i class="bi bi-arrow-return-left"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="{{ repo['name'] }}Setting" class="vtabcontent">
+            <h3 style="padding-top: 10px;">Setting</h3>
+
+            <p>Add or kick or mute/ unmute user in this repo. Use the search bar to filter.</p>  
+            <p>You must be at least an Academics to (un)mute.</p>  
+            <p>You must be at least an Administrative to kick people.</p>  
+            <p>You cannot kick/ mute someone of higher badge.</p>  
+            <div class="input-group mb-3">
+                <span class="input-group-text">Search</i></span>
+                <span class="input-group-text">Add member</i></span>
+                <input id="{{ repo['name'] }}Box2" class="form-control" placeholder="Username">
+                <button class="btn btn-primary" style="border: none;" onclick="add_mem_repo( '{{ repo['name'] }}' )">
+                    <i class="bi bi-person-add"></i>
+                </button>
+            </div>
+
+            <br>
+            <table id="SETTING{{ repo['name'] }}" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Kick</th>
+                        <th>Mute</th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    {% for mem in repo['member'] %}
+                    <tr>
+                        <td>{{ mem }}</td>
+                        <td><span class="badge {{ repo['member'][mem] }}">{{ repo['member'][mem] }}</span></td>
+                        <td><button class="btn btn-warning btn-sm" style="border: none;" onclick="kick_mem_repo( '{{ repo['name'] }}', '{{ mem }}' )">
+                                <i class="bi bi-person-dash"></i>
+                            </button></td>
+                        <td>    
+                            {% if repo['muted'][mem]%}
+                                <button class="btn btn-secondary btn-sm" style="border: none;" onclick="mute_mem_repo( '{{ repo['name'] }}', '{{ mem }}' )">
+                                    <i class="bi bi-mic-mute-fill"></i>
+                                </button>
+                            {% else %}
+                                <button class="btn btn-primary btn-sm" style="border: none;" onclick="mute_mem_repo( '{{ repo['name'] }}', '{{ mem }}' )">
+                                    <i class="bi bi-mic-fill"></i>
+                                </button>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %} 
+                </tbody>
+            </table>
+        </div>
+    </div> 
+{% endfor %} 
+
+<script>
+    let room_id = 0;
+    let username = "{{ username }}";
+    let repos = {{repolist | tojson}}[0];
+    const socket = io();
+    Cookies.set('username', username);
+
+    $(document).ready(() => {
+        reset();
+        // https://www.w3schools.com/bootstrap/tryit.asp?filename=trybs_filters_table&stacked=h
+        $("#settingSearch").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#settingTable tbody tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+            });
+        });
+
+        // key up search bar
+        for (let re in repos) {
+            repon = repos['name'];
+
+            $('#'+repon+'Box2').on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $('#SETTING'+repon+' tbody tr').filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+        }
+
+        if (Cookies.get("room_id") == undefined) { return; }
+        Cookies.remove("room_id");
+    })
+
+    socket.on('post-create', function(message) {
+        var new_post = '<div id="SUBP'+message.postid+'" class="card">' +
+                            '<h2 id="TITLE'+message.postid+'" contenteditable>'+message.title+
+                                    '<a id="BADGE'+message.postid+'" contenteditable="false" href="#'+message.postid+'" class="pid">#'+message.postid+'</a>'+
+                            '</h2>' +
+                            '<p>' + message.author +
+                                    '<span class="badge '+message.role+'" style="margin-left: 5px;">'+message.role+'</span>' +
+                                    '<span class="datetime">'+message.datetime+'</span>' +
+                            '</p>' +
+
+                            '<p id="CONTENT'+message.postid+'" contenteditable>'+message.content+'</p>' +
+                            
+                            '<textarea id="'+message.repo+message.postid+'" placeholder="Comment" class="form-control"></textarea>' +
+
+                            '<div style="margin-top: 5px;">' +
+                                '<button onclick="save_comment('+message.repo+', '+message.postid+')" class="cbtn default"><i class="bi bi-arrow-90deg-right"></i></button>' +
+                                '<button onclick="modify_post('+message.repo+', '+message.postid+')" class="cbtn success"><i class="bi bi-pencil-square"></i></button>' +
+                                '<button onclick="delete_post('+message.repo+', '+message.postid+')" class="cbtn danger"><i class="bi bi-trash3"></i></button>' +
+                            '</div>' +
+                            
+                            '<a id="hide" href="#hide" class="hide">+ Show comments</a>' +
+                            '<a id="show" href="#show" class="show">- Show comments</a>' +
+                            '<div id="COMMENT'+message.postid+'" class="comment-container"></div>' ;
+
+        // https://stackoverflow.com/questions/734041/how-to-add-paragraph-on-top-of-div-content
+        $('#POST'+message.repo).prepend(new_post);
+    });
+
+    socket.on('comment-create', function(message) {
+        var new_comment =   '<div id="SUBC'+message.postid+message.datetime+message.author+'" class="comment">' +
+                                '<b style="margin-top: 4px;">'+message.author+'</b>'+
+                                '<span class="badge '+message.role+'" style="margin-left: 5px;">'+message.role+'</span>'+
+                                '<span class="datetime">'+message.datetime+'</span>'+
+                                '<p class="ccontent">'+message.content+'</p>'+
+                                '<button onclick="delete_comment(\''+message.postid+'\', \''+message.author+'\', \''+message.datetime+'\')" class="dbtn">Delete</button>'+
+                            '</div>';
+
+        $('#COMMENT'+message.postid).prepend(new_comment);
+    });
+
+    socket.on('comment-delete', function(message) {
+        document.getElementById('SUBC'+message.postid+message.datetime+message.author).remove();
+    });
+
+    socket.on('post-delete', function(message) {
+        // https://stackoverflow.com/questions/3387427/remove-element-by-id
+        document.getElementById('SUBP'+message.postid).remove();
+    });
+
+    socket.on('recv-mess', function(message) {
+        let box = $("#CHAT"+message.repo);   
+        var time = '';
+
+        let child = '<div data-time="'+time+'" class="mess recv"><p style="color: red; display:inline;">'+message.sender+'. </p>'+message.message+'</div>';
+        if (message.sender == null) {
+            child = '<div data-time="'+time+'" class="mess server"><p style="color: grey; display:inline;">@server. </p>'+message.message+'</div>';
+        }
+
+        if (message.sender == username) {
+            child = '<div data-time="'+time+'" class="mess sent">'+message.message+'</div>'
+        } 
+        box.prepend(child);
+
+    });
+
+    socket.on('post-modified', function(message) {
+        // https://stackoverflow.com/questions/1358810/how-do-i-change-the-text-of-an-element-using-javascript
+        var title = document.getElementById('TITLE'+message.postid);
+        title.firstChild.textContent = message.title;
+
+        $("#"+'CONTENT'+message.postid).text(message.content);
+    });
+
+    socket.on('repo-create', function(message) {
+        flash(message.message, message.category);
+    });
+
+    socket.on('sign-up', function(message) {
+        var rep = $('#settingTable').val();
+        var name = message.user;
+        var role = message.role;
+
+        var new_mem = '<tr>' +
+                            '<td>'+name+'</td>'+
+                            '<td><span class="badge '+role+'">'+role+'</span></td>'+
+                            '<td>'+
+                                '<button class="btn btn-link btn-sm" style="border: none; height: 25px; width: 25px;" onclick="up(  \''+name+'\' )">'+
+                                    '<i class="bi bi-arrow-up-square-fill" style="color:#83adb5;"></i>'+
+                                '</button>'+
+                                '<button class="btn btn-link btn-sm" style="border: none; height: 25px; width: 25px;" onclick="down( \''+name+'\')">'+
+                                    '<i class="bi bi-arrow-down-square-fill" style="color:#f9b764;"></i>'+
+                                '</button>'+
+                            '</td>'+
+                            '<td>'+
+                                '<input type="text" class="form-control input-sm" style="height: 25px;">'+
+                            '</td>'+
+                            '<td>'+
+                                '<label class="checkbox-container">'+
+                                    '<input type="checkbox" style="border-radius: 30px;">'+
+                                    '<span class="checkmark"></span>'+
+                                '</label>'+
+                            '</td>'+
+                            '<td>'+
+                                '<button class="btn btn-link btn-sm" style="border: none; height: 25px; width: 25px;" onclick="">'+
+                                    '<i class="bi bi-person-down"></i>'+
+                                '</button>'+
+                            '</td>'+
+                        '</tr>'
+
+        $('#settingTable'+ ' > tbody:first').append(new_mem);
+
+    });
+
+    socket.on('repo-add-mem', function(message) {
+        var rep = $('#SETTING'+message.repo).val();
+        if (rep == undefined) {
+            return;
+        }
+  
+        for (let mem in message['mems']) {
+            var name = message.mems[mem]['name'];
+            var role = message.mems[mem]['role'];
+          
+            var new_mem = '<tr><td>'+name+'</td>'+
+                        '<td><span class="badge '+role+'">'+role+'</span></td>'+
+                        '<td><button class="btn btn-warning btn-sm" style="border: none;" onclick="kick_mem_repo(\''+message.repo+'\', \''+name+'\')">'+
+                            '<i class="bi bi-person-dash"></i></button></td>'+
+                        '<td><button class="btn btn-primary btn-sm" style="border: none;" onclick="mute_mem_repo(\''+message.repo+'\', \''+name+'\')">'+
+                            '<i class="bi bi-mic-fill"></i></button></td>'+
+                        '</tr>'
+            $('#SETTING'+message.repo+' > tbody:first').append(new_mem);
+        }     
+    });
+
+    socket.on('repo-kick-mem', function(message) {
+        // https://stackoverflow.com/questions/3145431/how-to-remove-table-row-based-on-contents-of-one-of-the-cells-in-the-row-with-j
+
+        $('#SETTING'+message.repo+' tr').each(function() {
+            var row = $(this).find("td:first");
+                if (row.text() == message.mem) {
+                    $(this).find("td").remove();
+                }
+        });
+
+    });
+
+    socket.on('repo-mute-mem', function(message) {
+        // https://stackoverflow.com/questions/33875638/jquery-replace-content-in-a-table
+        // https://stackoverflow.com/questions/3145431/how-to-remove-table-row-based-on-contents-of-one-of-the-cells-in-the-row-with-j
+        // https://stackoverflow.com/questions/376081/how-to-get-a-table-cell-value-using-jquery
+
+        if (message.prev) {
+            if (message.mem == username) {
+                $('#'+message.repo+' textarea').prop('disabled', true);
+                $('#'+message.repo+' input').prop('disabled', true);
+                $('#'+message.repo+' p').prop('contenteditable', false);
+            } 
+            $('#SETTING'+message.repo+' tr').each(function() {
+                if ($(this).find("td:first").text() == message.mem) {
+                    var column = $(this).find("td:nth-child(4) button");
+                    column.removeClass().addClass('btn btn-secondary btn-sm');
+                    column.find("i").removeClass().addClass('bi bi-mic-mute-fill');
+                }
+            });
+
+            //$('#SETTING'+message.repo+' > tbody tr td:nth-child(1):contains("'+message.mem+'") td:nth-child(4) button').removeClass().addClass('btn btn-secondary btn-sm');
+            //$('#SETTING'+message.repo+' > tbody tr td:nth-child(1):contains("'+message.mem+'") td:nth-child(4) button i').removeClass().addClass('bi bi-mic-mute-fill');
+        } else {
+            if (message.mem == username) {
+                $('#'+message.repo+' textarea').prop('disabled', false);
+                $('#'+message.repo+' input').prop('disabled', false);
+                $('#'+message.repo+' p').prop('contenteditable', true);
+            } 
+            $('#SETTING'+message.repo+' tr').each(function() {
+                if ($(this).find("td:first").text() == message.mem) {
+                    var column = $(this).find("td:nth-child(4) button");
+                    column.removeClass().addClass('btn btn-primary btn-sm');
+                    column.find("i").removeClass().addClass('bi bi-mic-fill');
+                }
+            });
+            //$('#SETTING'+message.repo+' > tbody td:nth-child(1):contains("'+message.mem+'") td:nth-child(4) button').removeClass().addClass('btn btn-success btn-sm');
+            //$('#SETTING'+message.repo+' > tbody td:nth-child(1):contains("'+message.mem+'") td:nth-child(4) button i').removeClass().addClass('bi bi-mic-fill');
+        }
+    });
+
+    socket.on('user-promote', function(message) {
+        $('#settingTable'+' tr').each(function() {
+            if ($(this).find("td:first").text() == message.mem) {
+                var column = $(this).find("td:nth-child(2) span");
+                column.removeClass().addClass('badge '+message.role);
+                column.text(message.role);
+
+            }
+        });
+    });
+
+    function reset() {
+        // https://stackoverflow.com/questions/42765042/jquery-increment-the-id-and-href-of-elements
+        $('.show').each(function(i){
+            var newID='show' + i;  
+            var href='#show' + i;  
+            $(this).attr('id',newID);   
+            $(this).attr('href',href);       
+        });
+        $('.hide').each(function(i){
+
+            var newID='hide' + i;  
+            var href='#hide' + i;  
+            $(this).attr('id',newID);
+            $(this).attr('href',href);          
+        });
+
+    }
+
+
+    function open_htab(evt, reponame) {
+    
+        // Declare all variables
+        var i, htabcontent, htablinks;
+        // Get all elements with class="htabcontent" and hide them
+        htabcontent = document.getElementsByClassName("htabcontent");
+        for (i = 0; i < htabcontent.length; i++) {
+            htabcontent[i].style.display = "none";
+        }
+        // Get all elements with class="htablinks" and remove the class "active"
+        htablinks = document.getElementsByClassName("htablinks");
+        for (i = 0; i < htablinks.length; i++) {
+            htablinks[i].className = htablinks[i].className.replace(" active", "");
+        }
+        // Show the current htab, and add an "active" class to the link that opened the htab
+        document.getElementById(reponame).style.display = "block";
+        // https://stackoverflow.com/questions/45759292/how-to-change-a-style-property-of-element-by-class-name-without-any-use-of-ids
+        document.getElementById(reponame).getElementsByClassName("vtab")[0].style.display = "block";
+        evt.currentTarget.className += " active";
+        
+        open_vtab(null, reponame+'Article');
+
+        join_room(reponame);
+    }
+
+    function open_vtab(evt, repotab) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("vtabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("vtablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(repotab).style.display = "block";
+        if (evt != null) {
+            evt.currentTarget.className += " active";
+        }
+    }
+
+    function create_post(reponame) {
+        // https://stackoverflow.com/questions/14939010/get-value-from-text-area
+        var title = $("#"+reponame+"Title").val().trim();
+        var content = $("#"+reponame+"Thread").val().trim();
+        if (title == '') {
+            flash("Title can't be blank.", 'danger');
+            return;
+        }
+        if (content == '') {
+            flash("Content can't be blank.", 'danger');
+            return;
+        }
+        socket.emit('create-post', username, reponame, title, content, room_id, (res) => {
+            flash(res.message, res.category);
+            $("#"+reponame+"Title").val("");
+            $("#"+reponame+"Thread").val("");
+        });
+    }
+
+    function add_mem_repo(reponame) {
+        let to_add = $("#"+reponame+'Box2').val();
+
+        socket.emit("add-mem-repo", username, reponame, to_add, room_id, (res) => {
+            flash(res.message, res.category);
+            $("#"+reponame+'Box2').val("");
+        });
+    }
+
+    function up(user) {
+        socket.emit("promote-user", username, user, room_id, (res) => {
+            flash(res.message, res.category);
+        });
+    }
+
+    function down(user) {
+        socket.emit("promote-user", username, user, room_id, false, (res) => {
+            flash(res.message, res.category);
+        });
+    }
+
+    function creaddd_mem_repo() {
+        let reponame = $('#settingCreadd').val().trim();
+
+        if (reponame == "") {
+            flash("Reponame can't be empty.", "danger");
+            return;
+        }
+        // https://stackoverflow.com/questions/22024802/jquery-how-to-get-value-of-selected-option-in-a-table-row
+
+        const memlist = [username];
+        $('#settingTable tr').each(function() {
+            
+            var user = $(this).find("td:first").text();
+            var selected = $(this).find("td:nth-child(5) label input:checked").val();
+            if(selected != undefined) {
+                memlist.push(user);
+            }
+        });
+
+        socket.emit("add-mem-repo", username, reponame, memlist, room_id, 'creaadd', (res) => {
+            flash(res.message, res.category);
+            $('#settingCreadd').val("");
+        });
+    }
+
+    function kick_mem_repo(reponame, to_kick) {
+        socket.emit("kick-mem-repo", username, reponame, to_kick, room_id, (res) => {
+            flash(res.message, res.category);
+        });
+    }
+
+    function mute_mem_repo(reponame, to_mute) {
+        socket.emit("mute-mem-repo", username, reponame, to_mute, room_id, (res) => {
+            flash(res.message, res.category);
+        });
+        
+    }
+
+    function flash(message, category) {
+        // https://www.w3schools.com/bootstrap/bootstrap_alerts.asp
+        // https://stackoverflow.com/questions/17650776/add-remove-html-inside-div-using-javascript
+        var flash = document.getElementById('flash');
+        $('#flash').empty();
+        flash.innerHTML = '<div class="alert alert-' + category +  ' alert-dismissible">' +
+                            '<strong>' + message + '</strong>' +
+                            '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button></div>';
+    }
+
+    function save_comment(reponame, postid) {
+        var repo = reponame;
+        if (typeof reponame !== 'string') {
+            repo = reponame.id;
+        }
+
+        var comment = $("#"+repo+postid).val().trim();
+        if (comment == '') {
+            flash("Empty comment.", 'danger');
+            return;
+        }
+        socket.emit('create-comment', username, comment, postid, room_id, (res) => {
+            if (res.category != 'success') {
+                flash(res.message, res.category);
+            }
+            $("#"+repo+postid).val("");
+        });
+    }
+    function delete_post(repo, postid) {
+        socket.emit('delete-post', username, postid, room_id, (res) => {
+            flash(res.message, res.category);
+        });
+    }
+    function delete_comment(postid, author, time) {
+        socket.emit('delete-comment', username, postid, author, time, room_id, (res) => {
+            flash(res.message, res.category);
+        });
+    }
+    function modify_post(repo, postid) {
+        var title = $("#"+'TITLE'+postid).contents().get(0).nodeValue.trim();
+        var content = $("#"+'CONTENT'+postid).text().trim();
+
+        socket.emit('modify-post', username, postid, title, content, room_id, (res) => {
+            flash(res.message, res.category);
+        });
+    }
+
+    function leave() {
+        Cookies.remove("room_id");
+        socket.emit("leave-repo", username, room_id, (res) => {
+            if (typeof res === 'string' && isValidURL(res)) {
+                var re_login_url = "{{ url_for('reauthenticate') }}";
+                re_authenticate(re_login_url);
+            }
+            room_id = res;
+        });
+    }
+
+    function join_room(repo) {
+        leave();
+        socket.emit("join-repo", username, repo, (res) => {
+            if (typeof res === 'string' && isValidURL(res)) {
+                var re_login_url = "{{ url_for('reauthenticate') }}";
+                re_authenticate(re_login_url);
+            }
+            room_id = res.room_id;  
+            show_chat_log(repo, res.chat_log);
+            Cookies.set("room_id", room_id);
+
+            if (res.muted) {
+                $('#'+repo+' textarea').prop('disabled', true);
+                $('#'+repo+' input').prop('disabled', true);
+                $('#'+repo+' p').prop('contenteditable', false);
+            }     
+        });
+    }
+
+    function send(reponame) {
+        let message = $("#"+reponame+'Box').val().trim();
+        if (message == '') {
+            return;
+        }
+
+        // save message and tranfer message (if both in same room)
+        socket.emit("send-repo", username, reponame, room_id, message, (res) => {
+            if (typeof res === 'string' && isValidURL(res)) {
+                var re_login_url = "{{ url_for('reauthenticate') }}";
+                re_authenticate(re_login_url);
+            }
+            $("#"+reponame+'Box').val("");
+        });
+    } 
+
+    function re_authenticate(url) {
+        axios.get(url) 
+            .then(response => {
+                window.open(response.data, "_self");
+        })
+    }
+
+    function isValidURL(string) {
+            if (string.length == 0) {
+                return false;
+            }
+            if (string[0] == "/") {
+                return true;
+            }
+            return false;
+    }
+
+    function show_chat_log(repo, chat_log) {
+        let box = $("#CHAT"+repo);
+
+        for (let time in chat_log) {
+            for (let idx in chat_log[time]) {
+                var tmp = chat_log[time][idx];
+                var timestamp = time;
+                timestamp="";
+                var sender = tmp[0];
+                var message = tmp[1];
+
+                let child = '<div data-time="'+timestamp+'" class="mess recv"><p style="color: red; display:inline;">'+sender+'. </p>'+message+'</div>';
+
+                if (sender == username) {
+                    child = '<div data-time="'+timestamp+'" class="mess sent">'+message+'</div>'
+                }
+                //let timestamp = time;
+                //let sender = msg[0]
+                box.append(child);
+            }
+            
+        }
+        //let child = $(`<p style="color:${color}; margin: 0px;"></p>`).text(timestamp + ' - ' + sender + ': ' + msg);
+    }
+</script>
+{% endblock %}

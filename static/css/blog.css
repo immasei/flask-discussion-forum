@@ -1,0 +1,122 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial;
+  padding: 20px;
+  background: #f1f1f1;
+}
+
+/* Header/Blog Title */
+.header {
+  padding: 30px;
+  font-size: 40px;
+  text-align: center;
+  background: white;
+}
+/* https://www.w3schools.com/howto/howto_css_blog_layout.asp */
+/* https://www.w3schools.com/howto/howto_js_vertical_tabs.asp */
+/* Create two unequal columns that floats next to each other */
+/* Left column */
+.leftcolumn {
+  float: left;
+  width: 75%;
+}
+
+/* Right column */
+.rightcolumn {
+  float: left;
+  width: 25%;
+  padding-left: 20px;
+}
+
+.card {
+  background-color: white;
+  padding: 20px;
+  margin-top: 20px;
+ }
+
+/* textarea[disabled] {background-color: #0f0;} */
+
+* {box-sizing: border-box}
+
+/* Style the htab */
+.htab {
+  float: left;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+  width: 20%;
+  /* height: 300px; */
+}
+
+/* Style the buttons that are used to open the htab content */
+.htab button {
+  display: block;
+  background-color: inherit;
+  color: black;
+  padding: 22px 16px;
+  width: 100%;
+  border: none;
+  outline: none;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.htab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current "htab button" class */
+.htab button.active {
+  background-color: #ccc;
+}
+
+/* Style the htab content */
+.htabcontent {
+  float: left;
+  padding: 0px 12px;
+  border: 1px solid #ccc;
+  width: 80%;
+  padding-left: 10px;
+  border-left: none;
+  /* height: 300px; */
+}
+
+.vtab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.vtab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  width: 33%;
+}
+
+/* Change background color of buttons on hover */
+.vtab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.vtab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.vtabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
