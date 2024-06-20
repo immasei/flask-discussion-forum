@@ -1,16 +1,18 @@
-# Setup your virtual environment and install the library
+## Discussion Forum and Private Chat
+
+### Setup your virtual environment and install the library
 
 ```bash
 pip install -r requirements.txt
 ```
 
-# Running the App
+### Running the App
 
 ```bash
-python3 app.py
+make
 ```
 
-# If the web stuck, you need to flush the socket pools
+### If the web stuck, you need to flush the socket pools
 
 ```
 chrome://net-internals/#sockets
@@ -18,9 +20,8 @@ chrome://net-internals/#sockets
 
 Press flush socket pools
 
-# We have a git repo but it's hidden:D
 
-# HTTPS
+### HTTPS - Goto Trust CA
 
 Steps
 ```
