@@ -40,7 +40,7 @@
 
   * Default Admin Account:  (`X`, `pwd`)
  
-* If the web stuck or crash, you need to `flush socket pools`
+* If the web stuck or crash: `flush socket pools`
 
   ```
     chrome://net-internals/#sockets
