@@ -229,6 +229,6 @@ javascript/
 
 bcrypt https://stackoverflow.com/a/27519440 https://stackoverflow.com/a/70938979
 
-db tool hnps://dbdiagram.io/ hnps://sqlitebrowser.org/dl/
+db tool https://dbdiagram.io/ https://sqlitebrowser.org/dl/
 
       
