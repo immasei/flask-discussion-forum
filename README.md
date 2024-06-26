@@ -2,10 +2,10 @@
 
 ### Techstack
 
-| Frontend   | Backend                 | Database  |
-| :--------  | :-----------------------| :--------------------- | 
-| Jinja + Bootstrap 5   | Flask (Python) | SQLite               |
-| JS + JQuery + Axios   | Flask-SocketIO | SQLAlchemy      |
+  | Frontend   | Backend                 | Database  |
+  | :--------  | :-----------------------| :--------------------- | 
+  | Jinja + Bootstrap 5   | Flask (Python) | SQLite               |
+  | JS + JQuery + Axios   | Flask-SocketIO | SQLAlchemy      |
 
 ### Execution
 
@@ -45,11 +45,26 @@
   Realtime update: RT
 ```
 
-* `Navbar`
+* #### Navbar
 
-* #### Signup/ Login:
+  * Table of contents 
+
+    | Nav    |  Goto |                             
+    | :--------  | :-----------------------------------| 
+    | `Signup` | [Jump](#Signup/Login) |
+    | `Login` | [Jump](#Signup/Login) | 
+    | `Chat` | [Jump](#Chat) |          
+    | `Repo` | [Jump](#Repo) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+
+    <p><img align='center' src='readme-resources/nav.png' width='750'/></p>
+
+* #### Signup/Login:
 
   * New accounts has `Student` role by default.
+ 
+  * This project is essentially about a discussion forum & private chat. The reason for it being an "Academic Discussion Forum" is related to accounts role.
+
+  * All roles (permissions) from lowest to highest are `Student`, `Academics`, `Administrative`, `Admin`.
 
 
 * #### Chat
@@ -72,11 +87,11 @@
 
    * `Chat Window`
  
-     * Server message: Yellow
+     * **Server message**: Yellow
 
-     * User sent message: Blue
+     * **Sent message**: Blue
 
-     * User received message: Orange   
+     * **Received message**: Orange   
 
      <p><img align='center' src='readme-resources/p2p.png' width='750'/></p>
 
@@ -103,12 +118,12 @@
       
     * All members of repo can make, delete and modify their own articles.
     
-    * Staff (role Academics or higher) is able to delete and modify other people's
+    * Staff (role `Academics` or higher) is able to delete and modify other people's
 articles regardless of role.
 
     * All members of repo can make, delete their own comments.
 
-    * Staff (role Academics or higher) can delete other people’s comments
+    * Staff (role `Academics` or higher) can delete other people’s comments
 regardless of role.
  
     <p><img align='center' src='readme-resources/post.gif' width='750'/></p>
@@ -119,14 +134,14 @@ regardless of role.
  
   * `Repo Setting`
  
-    * Kick/ add people to this repo (Administrative)
+    * Kick/ add people to this repo (`Administrative`)
 
-    * (Un)mute people in this repo (Academics)
+    * (Un)mute people in this repo (`Academics`)
    
     * `Admin` have all rights but this is targeting `Academics` & `Administrative` to operate
 on a specific repo. All roles have all rights of lower level roles.
    
-    * Search filter for easy user management in a specific repo.
+    * Search filter for easy user managements in a repo.
    
     <p><img align='center' src='readme-resources/reposetting.png' width='750'/></p>
 
@@ -138,11 +153,11 @@ posts, new comments and new incoming messages.
  
   * `General Setting`
 
-    * Functions focus on Admin and Administrative
+    * Functions focus on `Admin` and `Administrative`
 
     * Promote/ demote/ create repo (Admin)
     
-    * Select multiple people to add to existing repo (Admin and Administrative)
+    * Select multiple people to add to existing repo (`Admin` and `Administrative`)
    
     * Show all accounts in the system with a search filter. New sign-up accounts will be
 shown in real time in this table.
