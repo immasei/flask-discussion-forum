@@ -69,7 +69,9 @@
 
   * New accounts has `Student` role by default.
  
-  * This project is essentially about a discussion forum & private chat. The reason for it being an "Academic Discussion Forum" is related to accounts role.
+  * This project is essentially about a discussion forum & private chat.
+
+  * The reason for it being an "Academic Discussion Forum" is related to accounts role.
 
   * All roles (permissions) from lowest to highest are `Student`, `Academics`, `Administrative`, `Admin`.
 
@@ -146,14 +148,18 @@ regardless of role.
     * (Un)mute people in this repo (`Academics`)
    
     * `Admin` have all rights but this is targeting `Academics` & `Administrative` to operate
-on a specific repo. All roles have all rights of lower level roles.
+on a specific repo.
+
+    * All roles have all rights of lower level roles.
    
     * Search filter for easy user managements in a repo.
    
     <p><img align='center' src='readme-resources/reposetting.png' width='750'/></p>
 
     * If a user is muted in a specific repo, all text areas and inputs within the repo
-are blocked. They can’t comment or post or chat. But they can still see new
+are blocked.
+
+    * They can’t comment or post or chat. But they can still see new
 posts, new comments and new incoming messages.
 
     <p><img align='center' src='readme-resources/mute.png' width='750'/></p>
@@ -185,8 +191,9 @@ webpage to see the new repo.
   | Connection   | HTTPS TLS 1.3 | SQLite               |
   | Request Authentication | JWT, Flask Cookie      |
   | Password Hashing | Double hashing in client-side (cryptojs) and server-side (brcypt) |
-  | Message Confidentiality & Integrity (communication) | RSA for exchanging symmetric secret key for message encryption + integrity with HMAC |
-  | Encrypted Message History (storage) | (only p2p) store encrypted history & shared log key to decrypt history, shared log key encrypted by user pbkdf2 before storing on server |
+  | Message Confidentiality & Integrity (communication) | RSA for exchanging symmetric secret key for message encryption + HMAC |
+  | Encrypted Message History (storage) | (only p2p) store encrypted history & shared log key to decrypt history |
+  |  |  shared log key encrypted by user pbkdf2 before storing on server |
 
 ### References
 
