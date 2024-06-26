@@ -1,78 +1,80 @@
-## Discussion Forum and Private Chat
+## Academic Discussion Forum and Messaging
 
-### Setup your virtual environment and install the library
+### Techstack
 
-```bash
-pip install -r requirements.txt
-```
+| Frontend   | Backend                 | Database  |
+| :--------  | :-----------------------| :--------------------- | 
+| Jinja + Bootstrap 5   | Flask (Python) | SQLite               |
+| JS + JQuery + Axios   | Flask-SocketIO | SQLAlchemy      |
 
-### Running the App
+### Execution
 
-```bash
-make
-```
-Pre-existing admin account: 
-- username: X
-- password: pwd
+* Dependencies Installation
   
-You can signup other accounts and use admin account to change permission.
+  ```
+    pip install -r requirements.txt
+  ```
 
-### If the web stuck, you need to flush the socket pools
+* Setup HTTPS: under `/certs`
 
-```
-chrome://net-internals/#sockets
-```
+  ```
+    (MAC only) cd certs/
+  ```
+    
+  ```
+     sudo security add-trusted-cert -d -r trustRoot -k "/Library/Keychains/System.keychain" CA.pem
+  ```
 
-Press flush socket pools
+* Run program
 
+  ```
+    make
+  ```
 
-### HTTPS - Goto Trust CA
+  * Default Admin Account:  (`X`, `pwd`)
+ 
+* If the web stuck or crash, you need to `flush socket pools`
 
-Steps
-```
-mkdir  certs  
-```
+  ```
+    chrome://net-internals/#sockets
+  ```
 
-```
-cd certs
-```
-
-```
-openssl genrsa -out CA.key 2048
-```
-
-```
-openssl req -x509 -new -nodes -key CA.key -sha256 -days 825 -out CA.pem
-```
-
-```
-openssl genrsa -out localhost.key 2048 
-```
+### Features
 
 ```
-openssl req -new -key localhost.key -out localhost.csr 
+  Realtime update: RT
 ```
 
-```
-touch localhost.ext
-````
+* `Navbar`
 
-Insert into localhost.ext
-```
-authorityKeyIdentifier=keyid,issuer
-basicConstraints=CA:FALSE
-keyUsage = digitalSignature, nonRepudiation, keyEncipherment, dataEncipherment
-subjectAltName = @alt_names
+* `Signup/ Login`: New accounts has `Student` role by default.
 
-[alt_names]
-DNS.1 = localhost
-IP.1 = 127.0.0.1
-```
+* `Chat`: Private Chat and Tool Bar
+  
+  | Tab    | RT   | Encrypted | Usage |                             
+  | :--------  | :--- | :-------- | :-----------------------------------| 
+  | `Friends`  | ✅   | ✅        | p2p chat, friendlist, online status |
+  | `Group`    | ✅   | 🅾️        | group chat                          |
+  | `Sent`     | ✅   | 🅾️        | all sent friend requests            |
+  | `Received` | ✅   | 🅾️        | all received friend requests        |
+  | `[icon]`   | ✅   | 🅾️        | tooltab for add/unfriend, create groupchat        |
 
-```
-openssl x509 -req -in localhost.csr -CA CA.pem -CAkey CA.key \
--CAcreateserial -out localhost.crt -days 825 -sha256 -extfile localhost.ext
-```
+ <p align='center'>
+    <img align='center' src='readme-resources/addfr.gif' width='750'/>
+ </p>
+ 
+ <p align='center'>
+    <img align='center' src='readme-resources/toolbar.png' width='500'/>
+ </p>
+
+
+      
+
+
+
+
+
+
 
 Trust CA step
 ```
