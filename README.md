@@ -15,7 +15,7 @@
     pip install -r requirements.txt
   ```
 
-* Setup HTTPS: under `/certs`
+* Setup HTTPS - Trust CA: under `/certs`
 
   ```
     (MAC only) cd certs/
@@ -47,42 +47,55 @@
 
 * `Navbar`
 
-* `Signup/ Login`: New accounts has `Student` role by default.
+* #### Signup/ Login:
 
-* `Chat`: Chat Window (Emojicon) and Tool Bar
+  * New accounts has `Student` role by default.
 
-  * `Tool Bar`
+* #### Chat
+
+  * Chat Window (with emoji textarea) and Toolbar 
   
-      | Tab    | RT   | Encrypted | Usage |                             
-      | :--------  | :--- | :-------- | :-----------------------------------| 
-      | `Friends`  | ✅   | ✅        | p2p chat, friendlist, online status |
-      | `Group`    | ✅   | 🅾️        | group chat                          |
-      | `Sent`     | ✅   | 🅾️        | all sent friend requests            |
-      | `Received` | ✅   | 🅾️        | all received friend requests        |
-      | `[icon]`   | ✅   | 🅾️        | tooltab for add/unfriend, create groupchat &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    | Tab    | RT   | Encrypted | Usage |                             
+    | :--------  | :--- | :-------- | :-----------------------------------| 
+    | `Friends`  | ✅   | ✅        | p2p chat, friendlist, online status |
+    | `Group`    | ✅   | 🅾️        | group chat                          |
+    | `Sent`     | ✅   | 🅾️        | all sent friend requests            |
+    | `Received` | ✅   | 🅾️        | all received friend requests        |
+    | `[icon]`   | ✅   | 🅾️        | tooltab for add/unfriend, create groupchat &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+    | `Chat Window` | ✅   | ✅        | chat + emoji textarea       |
 
+  * `Toolbar`
      <p><img align='center' src='readme-resources/addfr.gif' width='750'/></p>
  
      <p><img align='center' src='readme-resources/toolbar.png' width='750'/></p>
 
-  <br>
+   * `Chat Window`
+ 
+     * Server message: Yellow
 
-   * `Chat Window` (with `Emoji Text Area`)
+     * User sent message: Blue
+
+     * User received message: Orange   
 
      <p><img align='center' src='readme-resources/p2p.png' width='750'/></p>
+
+  * `Emojitextarea` 
      
      <p><img align='center' src='readme-resources/emoji.gif' width='750'/></p>
 
+  <br>
+
+* #### Repo
+
+  * Discussion Forum
+
+    | Tab        | RT    | Usage |                             
+    | :--------  | :--- | :-----------------------------------| 
+    | `General Setting`  | ✅  | list all accounts, promote/demote, create repo/add member |
+    | `Repo Article`    | ✅ | post (crud), comment (crud)                        |
+    | `Repo Chat`     | ✅ | chat     |
+    | `Repo Setting` | ✅  | list repo members, kick/add/unmute/mute member, seaarch filter &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
+ 
+
 
       
-
-
-
-
-
-
-
-Trust CA step
-```
-sudo security add-trusted-cert -d -r trustRoot -k "/Library/Keychains/System.keychain" CA.pem
-```
