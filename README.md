@@ -59,25 +59,19 @@
       | `Group`    | ✅   | 🅾️        | group chat                          |
       | `Sent`     | ✅   | 🅾️        | all sent friend requests            |
       | `Received` | ✅   | 🅾️        | all received friend requests        |
-      | `[icon]`   | ✅   | 🅾️        | tooltab for add/unfriend, create groupchat        |
+      | `[icon]`   | ✅   | 🅾️        | tooltab for add/unfriend, create groupchat &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|
 
- <p align='center'>
-    <img align='center' src='readme-resources/addfr.gif' width='750'/>
- </p>
+     <p><img align='center' src='readme-resources/addfr.gif' width='750'/></p>
  
- <p align='center'>
-    <img align='center' src='readme-resources/toolbar.png' width='750'/>
- </p>
+     <p><img align='center' src='readme-resources/toolbar.png' width='750'/></p>
+
+  <br>
 
    * `Chat Window` (with `Emoji Text Area`)
 
- <p align='center'>
-    <img align='center' src='readme-resources/p2p.png' width='750'/>
- </p>
-
-  <p align='center'>
-    <img align='center' src='readme-resources/emoji.gif' width='750'/>
- </p>
+     <p><img align='center' src='readme-resources/p2p.png' width='750'/></p>
+     
+     <p><img align='center' src='readme-resources/emoji.gif' width='750'/></p>
 
 
       
