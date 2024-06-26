@@ -205,34 +205,17 @@ html & jquery https://github.com/habibmhamadi/multi-select-tag https://stackover
 
 icon & emojitextarea https://stackoverflow.com/questions/59462663/clear-the-form-textarea-after-submit-emoji-picker-with-jquery/59462774#59462774 https://icons.getbootstrap.com/ https://stackoverflow.com/questions/59437471/emojione-area-defined-textarea-didnt-except-any-overwritten-css-fix
 
-socketio https://stackoverflow.com/questions/66610562/socketio-to-emit-to-a-particular-user-
-without-using-separate-room-for-every-cli https://flask-
-socketio.readthedocs.io/en/latest/getting_started.html https://www.squash.io/implementing-real-time-features-with-flask-socketio-
-and-websockets/ https://stackoverflow.com/questions/29266594/broadcast-to-all-connected-clients-except-
-sender-with-python-flask-socketio
+socketio https://stackoverflow.com/questions/66610562/socketio-to-emit-to-a-particular-user-without-using-separate-room-for-every-cli https://flask-socketio.readthedocs.io/en/latest/getting_started.html https://www.squash.io/implementing-real-time-features-with-flask-socketio-and-websockets/ https://stackoverflow.com/questions/29266594/broadcast-to-all-connected-clients-except-sender-with-python-flask-socketio
 
-jwt & flask cookie https://www.opensourceforu.com/2022/10/implementing-jwt-using-
-the-flask-framework/ https://verdantfox.com/blog/cookies-with-the-flask-
-web-framework https://stackoverflow.com/questions/73436354/flask-and-httponly-cookie
+jwt & flask cookie https://www.opensourceforu.com/2022/10/implementing-jwt-using-the-flask-framework/ https://verdantfox.com/blog/cookies-with-the-flask-web-framework https://stackoverflow.com/questions/73436354/flask-and-httponly-cookie
 
-https https://deliciousbrains.com/ssl-certificate-authority-
-for-local-https-development/ https://lazypro.medium.com/socket-io-with-tls-f5a936a1976b
+https https://deliciousbrains.com/ssl-certificate-authority-for-local-https-development/ https://lazypro.medium.com/socket-io-with-tls-f5a936a1976b
 
-sqlalchemy https://stackoverflow.com/questions/65271004/primary-key-that-is-
-unique-over-2-columns-in-sqlalchemy https://stackoverflow.com/questions/9706059/setting-a-default-value-in-sqlalchemy https://www.freecodecamp.org/news/python-get-current-time/ https://stackoverflow.com/questions/17665809/remove-
-key-from-dictionary-in-python-returning-new-dictionary https://dsbowen.github.io/sqlalchemy-mutable/mutable_dict/ https://stackoverflow.com/questions/52900981/how-to-make-sqlalchemy-store-an-object-
-as-json-instead-of-a-relationship https://docs.sqlalchemy.org/en/20/orm/session_basics.html#deleting https://docs.sqlalchemy.org/en/20/orm/session_api.html#sqlalchemy.orm.Session.get https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_updating_objects.htm https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_using_query.htm https://stackoverflow.com/questions/17717877/convert-sqlalchemy-query-result-to-
-a-list-of-dicts https://soumendrak.medium.com/autoincrement-id-support-in-sqlalchemy-6a1383520ce3
+sqlalchemy https://stackoverflow.com/questions/65271004/primary-key-that-is-unique-over-2-columns-in-sqlalchemy https://stackoverflow.com/questions/9706059/setting-a-default-value-in-sqlalchemy https://www.freecodecamp.org/news/python-get-current-time/ https://stackoverflow.com/questions/17665809/remove-key-from-dictionary-in-python-returning-new-dictionary https://dsbowen.github.io/sqlalchemy-mutable/mutable_dict/ https://stackoverflow.com/questions/52900981/how-to-make-sqlalchemy-store-an-object-as-json-instead-of-a-relationship https://docs.sqlalchemy.org/en/20/orm/session_basics.html#deleting https://docs.sqlalchemy.org/en/20/orm/session_api.html#sqlalchemy.orm.Session.get https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_updating_objects.htm https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_orm_using_query.htm https://stackoverflow.com/questions/17717877/convert-sqlalchemy-query-result-to-a-list-of-dicts https://soumendrak.medium.com/autoincrement-id-support-in-sqlalchemy-6a1383520ce3
 
-aes pbkdf2 hmac sha256 cryptojs https://dev.to/halan/4-ways-
-of-symmetric-cryptography-and-javascript-how-to-aes-with-javascript-3o1b https://cryptojs.gitbook.io/docs/ https://medium.com/@adarsh-d/aes-encryption-and-
-decryption-in-javascript-using-cryptojs-81b57205711d https://stackoverflow.com/q/75446363 https://coolaj86.com/articles/symmetric-cryptography-aes-with-webcrypto-and-
-node-js/ https://medium.com/@araj60988/title-secure-data-
-encryption-and-decryption-with-cryptojs-in-javascript-2833d5d35068 https://stackoverflow.com/a/71217694 hnps://rahulbhilesha077.medium.com/encrypmon-decrypmon-using-
-rsa-in-java-script-cb7b3a6b3eee github.com/juhoen/hybrid-crypto-js
+aes pbkdf2 hmac sha256 cryptojs https://dev.to/halan/4-ways-of-symmetric-cryptography-and-javascript-how-to-aes-with-javascript-3o1b https://cryptojs.gitbook.io/docs/ https://medium.com/@adarsh-d/aes-encryption-and-decryption-in-javascript-using-cryptojs-81b57205711d https://stackoverflow.com/q/75446363 https://coolaj86.com/articles/symmetric-cryptography-aes-with-webcrypto-and-node-js/ https://medium.com/@araj60988/title-secure-data-encryption-and-decryption-with-cryptojs-in-javascript-2833d5d35068 https://stackoverflow.com/a/71217694 https://rahulbhilesha077.medium.com/encrypmon-decrypmon-using-rsa-in-java-script-cb7b3a6b3eee github.com/juhoen/hybrid-crypto-js
 
-js https://blog.logrocket.com/understanding-axios-get-requests/ https://www.freecodecamp.org/news/web-storage-localstorage-vs-sessionstorage-in-
-javascript/
+js https://blog.logrocket.com/understanding-axios-get-requests/ https://www.freecodecamp.org/news/web-storage-localstorage-vs-sessionstorage-in-javascript/
 
 bcrypt https://stackoverflow.com/a/27519440 https://stackoverflow.com/a/70938979
 
