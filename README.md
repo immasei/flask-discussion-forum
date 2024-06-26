@@ -40,10 +40,10 @@
   ```
 
 ### Features
-
-```
-  Realtime update: RT
-```
+  
+  ```
+    Realtime update: RT
+  ```
 
 * #### Navbar
 
