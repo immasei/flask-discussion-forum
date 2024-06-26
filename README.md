@@ -49,22 +49,34 @@
 
 * `Signup/ Login`: New accounts has `Student` role by default.
 
-* `Chat`: Private Chat and Tool Bar
+* `Chat`: Chat Window (Emojicon) and Tool Bar
+
+  * `Tool Bar`
   
-  | Tab    | RT   | Encrypted | Usage |                             
-  | :--------  | :--- | :-------- | :-----------------------------------| 
-  | `Friends`  | ✅   | ✅        | p2p chat, friendlist, online status |
-  | `Group`    | ✅   | 🅾️        | group chat                          |
-  | `Sent`     | ✅   | 🅾️        | all sent friend requests            |
-  | `Received` | ✅   | 🅾️        | all received friend requests        |
-  | `[icon]`   | ✅   | 🅾️        | tooltab for add/unfriend, create groupchat        |
+      | Tab    | RT   | Encrypted | Usage |                             
+      | :--------  | :--- | :-------- | :-----------------------------------| 
+      | `Friends`  | ✅   | ✅        | p2p chat, friendlist, online status |
+      | `Group`    | ✅   | 🅾️        | group chat                          |
+      | `Sent`     | ✅   | 🅾️        | all sent friend requests            |
+      | `Received` | ✅   | 🅾️        | all received friend requests        |
+      | `[icon]`   | ✅   | 🅾️        | tooltab for add/unfriend, create groupchat        |
 
  <p align='center'>
     <img align='center' src='readme-resources/addfr.gif' width='750'/>
  </p>
  
  <p align='center'>
-    <img align='center' src='readme-resources/toolbar.png' width='500'/>
+    <img align='center' src='readme-resources/toolbar.png' width='750'/>
+ </p>
+
+   * `Chat Window` (with `Emoji Text Area`)
+
+ <p align='center'>
+    <img align='center' src='readme-resources/p2p.png' width='750'/>
+ </p>
+
+  <p align='center'>
+    <img align='center' src='readme-resources/emoji.gif' width='750'/>
  </p>
 
 
