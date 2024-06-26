@@ -413,12 +413,12 @@ def add_mem_repo(user, reponame, memlist, room_id, type='add'):
 
     res = db.add_mem_repo(user, reponame, memlist)
 
-    mems = [{'name': mem, 'role': db.get_user(mem).role} for mem in list(set(memlist))]
     if not res:
         return {'message': 'No permission', 'category': 'danger'}
     elif type == 'creaadd':
         dtype = res[0]
         memlist = res[1]
+        mems = [{'name': mem, 'role': db.get_user(mem).role} for mem in list(set(memlist))]
         if dtype == 'create':
             for i in list(set(memlist)):
                 iid = online_users.get(i, {}).get('id')
