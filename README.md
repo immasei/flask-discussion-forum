@@ -196,10 +196,6 @@ webpage to see the new repo.
   | Encrypted Message History (storage) | (only p2p) store encrypted history & shared log key to decrypt history |
   |  |  shared log key encrypted by user pbkdf2 before storing on server |
 
-### Acknowledgement
-
-The initial project setup was provided by **INFO2222 - University of Sydney**. All functionalities were implemented by me (including the graphics), unless otherwise noted.
-
 ### References
 
 bootstrap35 https://www.w3schools.com/bootstrap/default.asp https://www.w3schools.com/bootstrap5/index.php 
@@ -226,4 +222,7 @@ bcrypt https://stackoverflow.com/a/27519440 https://stackoverflow.com/a/70938979
 
 db tool https://dbdiagram.io/ https://sqlitebrowser.org/dl/
 
+### Acknowledgement
+
+The initial project setup was provided by **INFO2222 - University of Sydney**. All functionalities were implemented by me (including the graphics), unless otherwise noted.
       
