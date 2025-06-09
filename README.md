@@ -5,6 +5,7 @@
 **[Execution](#Execution)**<br>
 **[Demo Features](#Features)**<br>
 **[Security Considerations](#SecurityConsiderations)**<br>
+**[Acknowledgement](#Acknowledgement)**<br>
 **[References](#References)**<br>
 
 ### Techstack
@@ -194,6 +195,10 @@ webpage to see the new repo.
   | Message Confidentiality & Integrity (communication) | RSA for exchanging symmetric secret key for message encryption + HMAC |
   | Encrypted Message History (storage) | (only p2p) store encrypted history & shared log key to decrypt history |
   |  |  shared log key encrypted by user pbkdf2 before storing on server |
+
+### Acknowledgement
+
+The initial project setup was provided by **INFO2222 - University of Sydney**. All functionalities were implemented by me (including the graphics), unless otherwise noted.
 
 ### References
 
